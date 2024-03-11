@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const SideBar =()=> {
 
@@ -7,9 +8,9 @@ const SideBar =()=> {
     if(!isMenuOpen)
     return null;
 
-    return <div className="p-5 shadow-lg w-48">
+    return <div className="p-5 shadow-lg w-auto">
         <ul>
-            <li className="hover:font-bold hover:cursor-pointer">Home</li>
+            <li className="hover:font-bold hover:cursor-pointer"> <Link to='/'>Home</Link> </li>
             <li className="hover:font-bold hover:cursor-pointer">Shorts</li>
             <li className="hover:font-bold hover:cursor-pointer">Videos</li>
             <li className="hover:font-bold hover:cursor-pointer">Live</li>
