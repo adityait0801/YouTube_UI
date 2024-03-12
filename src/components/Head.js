@@ -1,14 +1,18 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../utils/appSlice";
 import { useState, useEffect, Component } from "react";
 import { YouTube_SEARCH_API } from "../utils/constants";
+import { cacheResults } from "../utils/searchSlice";
 
 const Head =()=> {
 
     const [searchQuery, setSearchQuery] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
+    
+    const searchCache = useSelector((store) => store.search);
 
+    const dispatch = useDispatch();
     //console.log(searchQuery);
     //The api will will be called fot each key stroke.
     // useEffect(()=> {
@@ -21,11 +25,20 @@ const Head =()=> {
     */
 
     useEffect(()=> {
-        const timer = setTimeout(()=>getSearchSuggestions(), 200);
+        const timer = setTimeout( ()=>{
+        if(searchCache[searchQuery])
+        {
+            setSuggestions(searchCache[searchQuery]);
+        }
+        else
+        {
+            getSearchSuggestions();
+        }
+            } ,200);
 
         return ()=> {
             clearTimeout(timer);    
-        };
+        } 
 
     }, [searchQuery])
     
@@ -51,9 +64,14 @@ const Head =()=> {
         const json = await data.json();
        // console.log(json);
        setSuggestions(json[1]);
-    }
 
-    const dispatch = useDispatch();
+       //update cache
+    dispatch(
+        cacheResults({
+            [searchQuery] : json[1],
+      })
+    )
+    }
 
     const toggleMenuHandler =()=> {
         dispatch(toggleMenu());
