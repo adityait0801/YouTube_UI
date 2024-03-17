@@ -1,21 +1,23 @@
-
 import { useState } from "react";
 
-const Login = () => {
 
+const Signup = () => {
+
+    const [name,setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSubmit =async()=> {
 
         const payload = {
+            name,
             email,
             password,
         };
 
         try
         {
-            const data = await fetch("http://localhost:8010/login", {
+            const data = await fetch("http://localhost:8010/signup", {
             method : 'POST', 
             headers : {
                 "Content-type" : "application/json"
@@ -24,7 +26,6 @@ const Login = () => {
         })
             const json = await data.json();
             console.log(json);
-            localStorage.setItem("token", json.token);
          } 
         catch (error) {
          console.log(error);
@@ -33,7 +34,9 @@ const Login = () => {
 
     return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-4">Sign In</h1>
+        <h1 className="text-2xl font-bold mb-4">Sign Up</h1>
+        <label className="block mb-2">Name</label>
+        <input type="text" value={name} onChange={(e)=>setName(e.target.value)} className="w-full p-2 border border-gray-300 rounded-md mb-4"/>
         <label className="block mb-2">Email</label>
         <input type="text" value={email} onChange={(e)=>setEmail(e.target.value)} className="w-full p-2 border border-gray-300 rounded-md mb-4"/>
         <label className="block mb-2">Password</label>
@@ -42,4 +45,4 @@ const Login = () => {
     </div>
 )}
 
-export default Login;
+export default Signup;

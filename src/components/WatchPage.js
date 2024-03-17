@@ -1,29 +1,42 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { closeMenu } from "../utils/appSlice";
-import { useSearchParams } from "react-router-dom";
+    import { useEffect } from "react";
+    import { useDispatch } from "react-redux";
+    import { closeMenu } from "../utils/appSlice";
+    import { useSearchParams } from "react-router-dom";
+    import CommentsContainer from "./CommentsContainer";
+    import LiveChat from "./LiveChat";
 
-const WatchPage = () => {
+    const WatchPage = () => {
 
-    const[searchParams] = useSearchParams();
-   // console.log(searchParams.get("v"))
+        const[searchParams] = useSearchParams();
+    // console.log(searchParams.get("v"))
 
-    const dispatch = useDispatch();
+        const dispatch = useDispatch();
 
-    useEffect(()=> {
-        dispatch(closeMenu());
-    },[])
+        useEffect(()=> {
+            dispatch(closeMenu());
+        },[])
 
-    return <div className="px-5 ">
-        <iframe width="650" height="400" 
-        className="rounded-xl"
-        src={"https://www.youtube.com/embed/" + searchParams.get("v")} 
-        title="YouTube video player" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-        allowfullscreen>
-        </iframe>
-    </div>
-}
+        return (
+            <div className="flex flex-col w-full">
+                <div className="px-5 mx-6 my-2 flex">
+                    <div>
+                        <iframe width="800" height="450" 
+                        className="rounded-xl"
+                        src={"https://www.youtube.com/embed/" + searchParams.get("v")} 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div className="w-full">
+                        <LiveChat/>
+                    </div>
+                </div>
+                <CommentsContainer/>
+            </div>
+        )
+        
+    }
 
-export default WatchPage;
+    export default WatchPage;

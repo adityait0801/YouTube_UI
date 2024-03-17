@@ -8,6 +8,7 @@ import Login from './components/Login';
 import { Children } from 'react';
 import MainContainer from './components/MainContainer';
 import WatchPage from './components/WatchPage';
+import Signup from './components/Signup';
 
 function App() {
 
@@ -23,6 +24,14 @@ function App() {
         {
           path : '/watch',
           element : <WatchPage/>
+        },
+        {
+          path : '/signup',
+          element : <Signup/>
+        },
+        {
+          path : '/login',
+          element : <Login/>
         }
     ]
   }
